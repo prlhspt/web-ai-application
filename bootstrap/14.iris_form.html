@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class = "row">
+                    <form action="file:///D:/workspace/python/bootstrap/14.iris_form.html" method="POST" enctype="multipart/form-data">
+                        <h2>아이리스 Sepal Width는?</h2>
+                        <div class="table table-borderless">
+                            <tr>
+                                <td>Sepal Length</td>
+                                <td><input type="text" class="form-control" id="slen" 
+                                    placeholder="Sepal Length" name="slen"</td>
+                            </tr>
+                            <tr>
+                                <td>Sepal Length</td>
+                                <td><input type="text" class="form-control" id="plen" 
+                                    placeholder="petal Length" name="slen"</td>
+                            </tr>
+                            <tr>
+                                <td>Sepal Length</td>
+                                <td><input type="text" class="form-control" id="swid" 
+                                    placeholder="Sepal width" name="slen"</td>
+                            </tr>
+                            <tr>
+                                <td>Sepal Length</td>
+                                <td><input type="text" class="form-control" id="pwid" 
+                                    placeholder="Petal wdith" name="sle"n"</td>
+                            </tr>
+                            <tr>
+                                <td>품종</td>
+                                <td><select class="form-control" id="species" name="species">
+                                    <option>Setosa</option>
+                                    <option>2번꽃</option>
+                                    <option>3번꽃</option>
+                                  </select></td>
+                            </tr>
+                            <tr>
+                                <td>비고</td>
+                                <td><textarea class="form-control" rows="5" id="comment" name="text"></textarea></td>
+                            </tr>
+                            <div class="form-group" style="margin-top:30px;">
+                                <input type="file" class="form-control-file border" name="file">
+                            </div>
+                            <div colspan="2" style="margin-top:30px text-align=center";>
+                                
+                                <button type="submit" class="btn btn-primary">확인</button>
+                                <button type="submit" class="btn btn-primary">취소</button>
+                            </div>
+                        </div>
+                    </form>
+        </div>
+    </div>
+  
+</body>
+</html>
