@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <title>Bootstrap Example</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/bootstrap.min.css')}}">
+    <script src="{{url_for('static', filename='js/jquery-3.5.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/popper.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/bootstrap.min.js')}}"></script>
+</head>
+
+<body>
+
+    <!-- header -->
+    <nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-start">
+        <a class="navbar-brand" href="#">
+            <img src="{{ url_for('static', filename='images/logo.png') }}" alt="images/logo" style="width:500px;">
+        </a>
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">Link</a>
+            </li>
+            
+        </ul>
+        <div class="navbar-text" id="clock">
+            2020-07-16 (목)
+        </div>
+    </nav>
+
+    <!-- main -->
+
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <ul class="nav flex-column nav-pills ">
+                    <li class="nav-item" style="margin-top: 30px;">
+                        <a class="nav-link active" href="#">회귀</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">분류</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">군집화</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link disabled" href="#">텍스트 선택</a>
+                    </li>
+                    <div class="dropdown">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                            멤버
+                        </button>
+                        <div class="dropdown-menu">
+                            <a class="dropdown-item" href="#">Link 1</a>
+                            <a class="dropdown-item" href="#">Link 2</a>
+                            <a class="dropdown-item" href="#">Link 3</a>
+                        </div>
+                    </div>
+
+                </ul>
+            </div>
+
+            
+            <div class="col-2"></div>
+
+            <div class="col-8" style="margin-top: 30px;">
+                
+                <form action="/iris" method="POST" enctype="multipart/form-data">
+                    {% block content %}
+                    <h3>아이리스 Sepal Width는?</h3>
+                    <hr>
+                    <div class="table table-borderless">
+                        
+                        <div class="col-6 justify-content-start">
+                            <tr>
+                                <td>Sepal Length</td>}
+                                <td><input type="text" class="form-control" id="slen" placeholder="Sepal Length"
+                                        name="slen" </td>
+                            </tr>
+                            
+                            <tr>
+                                <td>Petal Length</td>
+                                <td><input type="text" class="form-control" id="plen" placeholder="petal Length"
+                                        name="plen" </td>
+                            </tr>
+                            <tr>
+                                <td>Sepal Width</td>
+                                <td><input type="text" class="form-control" id="swid" placeholder="Sepal width"
+                                        name="swid" </td>
+                            </tr>
+                            <tr>
+                                <td>Petal Width</td>
+                                <td><input type="text" class="form-control" id="pwid" placeholder="Petal wdith"
+                                        name="pwid" n"</td>
+                            </tr>
+                            <tr>
+                                <td>품종</td>
+                                <td><select class="form-control" id="species" name="species">
+                                        <option>Setosa</option>
+                                        <option>2번꽃</option>
+                                        <option>3번꽃</option>
+                                    </select></td>
+                            </tr>
+                            <tr>
+                                <td>비고</td>
+                                <td><textarea class="form-control" rows="5" id="comment" name="text"></textarea>
+                                </td>
+                            </tr>
+                            <div class="form-group" style="margin-top:10px;">
+                                <input type="file" class="form-control-file border" name="file">
+                            </div>
+                            <div colspan="2" style="margin-top:10px text-align=center;">
+                                <button type="submit" class="btn btn-primary">확인</button>
+                                <button type="submit" class="btn btn-primary">취소</button>
+                            </div>
+                        </div>
+                        {% endblock %}
+                </form>
+               
+
+            </div>
+            
+        </div>
+      
+        <!-- footer -->
+
+        <nav class="navbar navbar-expand-md  fixed-bottom justify-content-center bg-light">
+            <div class="navbar-text" style="text-align:center;">
+                Copyright 2020 AI Innovator
+            </div>
+        </nav>
+      
+    </div>
+
+    <script>
+        document.getElementById('clock').onload = startTime();
+    
+        function startTime()
+        {
+            let dow = ['일', '월', '화', '수', '목', '금', '토']
+            let today = new Date();
+            let year = today.getFullYear();
+            let month = today.getMonth() + 1;
+            let date = today.getDate();
+            let day = today.getDay();   // 요일
+            let hour = today.getHours();
+            let min = today.getMinutes();
+            let sec = today.getSeconds();
+    
+            today = year + "-" + cvt2(month) + "-" + cvt2(date) + " (" + dow[day] + ") " +
+                    cvt2(hour) + ":" + cvt2(min) + ":" + cvt2(sec);
+            document.getElementById('clock').innerHTML = today;
+            t=setTimeout(function() {
+                startTime();
+            }, 1);
+        }
+        function cvt2(i)
+        {
+            if (i<10)
+                i = "0" + i;
+            return i;
+        }
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <title>Bootstrap Example</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+<div class="container">
+    <div class = "row">
+        <div class = "col-3"></div>
+        <form action="/iris" method="POST" enctype="multipart/form-data">
+            <h2>아이리스 Sepal Width는?</h2>
+            <div class="table table-borderless">
+                
+                <tr>
+                    <td>Sepal Length : {{slen}}</td>
+                </tr>
+                <tr>
+                    <p><td>Petal Length : {{plen}}</td>
+                
+                </tr>
+                <tr>
+                    <p><td>Sepal Width : {{swid}}</td>
+                    
+                </tr>
+                <tr>
+                    <p><td>Petal Iwdth : {{pwid}}</td>
+                    
+                </tr>
+                <tr>
+                    <p><td>품종</td>
+                    <td>{{species}}</td>
+                </tr>
+                <tr>
+                    <p><td>비고</td>
+                    <td>{{comment}}</td>
+                </tr>
+            </div>
+        </form>
+    </div>
+</body>
+</html>
