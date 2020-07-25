@@ -22,9 +22,17 @@
             <li class="nav-item">
                 <a class="nav-link {% if menu.home %}active{% endif %}" 
                     href="{% if menu.home %}#{% else %}/{% endif %}">
-                    <i class="fa fa-home"></i> Home
+                    <i class="fa fa-home">Home</i> 
                 </a>
             </li>
+
+            <li class="nav-item">
+                <a class="nav-link {% if menu.profile %}active{% endif %}" 
+                    href="{% if menu.profile %}#{% else %}/profile{% endif %}">
+                    <i class="fa">Profile</i> 
+                </a>
+            </li>
+
             <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
             </li>

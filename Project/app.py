@@ -3,12 +3,12 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
-    menu = {'home':True, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':False, 'user':False}
+    menu = {'home':True, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':False, 'user':False, 'profile':False}
     return render_template('home.html', menu=menu)
 
 @app.route('/regression', methods=['GET', 'POST'])
 def rgrs():
-    menu = {'home':False, 'rgrs':True, 'stmt':False, 'clsf':False, 'clst':False, 'user':False}
+    menu = {'home':False, 'rgrs':True, 'stmt':False, 'clsf':False, 'clst':False, 'user':False, 'profile':False}
     if request.method == 'GET':
         return render_template('base.html', menu=menu)
     else:
@@ -16,7 +16,7 @@ def rgrs():
 
 @app.route('/iris', methods=['GET', 'POST'])
 def rgrs_result():
-    menu = {'home':False, 'rgrs':True, 'stmt':False, 'clsf':False, 'clst':False, 'user':False}
+    menu = {'home':False, 'rgrs':True, 'stmt':False, 'clsf':False, 'clst':False, 'user':False, 'profile':False}
     if request.method == 'GET':
         return render_template('base.html', menu=menu)
     else:
@@ -39,24 +39,29 @@ def rgrs_result():
 
 @app.route('/sentiment')
 def stmt():
-    menu = {'home':False, 'rgrs':False, 'stmt':True, 'clsf':False, 'clst':False, 'user':False}
+    menu = {'home':False, 'rgrs':False, 'stmt':True, 'clsf':False, 'clst':False, 'user':False, 'profile':False}
     return render_template('home.html', menu=menu)
 
 @app.route('/classification')
 def clsf():
-    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':True, 'clst':False, 'user':False}
-    return render_template('home.html', menu=menu)
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':True, 'clst':False, 'user':False, 'profile':False}
+    return render_template('classification.html', menu=menu)
 
 @app.route('/clustering')
 def clst():
-    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':True, 'user':False}
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':True, 'user':False, 'profile':False}
     return render_template('home.html', menu=menu)
 
 @app.route('/user')
 def user():
-    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':False, 'user':True}
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':False, 'user':True, 'profile':False}
     return render_template('home.html', menu=menu)
 
+
+@app.route('/profile')
+def profile():
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':False, 'user':False, 'profile':True}
+    return render_template('profile.html', menu=menu)
 
 if __name__ == '__main__':
     app.run(debug=True)
