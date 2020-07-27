@@ -27,13 +27,6 @@
             </li>
 
             <li class="nav-item">
-                <a class="nav-link {% if menu.profile %}active{% endif %}" 
-                    href="{% if menu.profile %}#{% else %}/profile{% endif %}">
-                    <i class="fa">Profile</i> 
-                </a>
-            </li>
-
-            <li class="nav-item">
                 <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true"></a>
             </li>
         </ul>
@@ -70,7 +63,7 @@
                         <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">멤버</a>
                         <div class="dropdown-menu">
-                        <a class="dropdown-item" href="#">김태균</a>
+                        <a class="dropdown-item" href="/lhs">임현석</a>
                         <a class="dropdown-item" href="#">이용규</a>
                         <a class="dropdown-item" href="#">김민우</a>
                         </div>
@@ -81,8 +74,7 @@
                 {% block subtitle %}<h3><strong>다중 선형회귀</strong> - <small>Iris Sepal Width는?</small></h3>{% endblock %}
                 <hr>
                 <div class="row">
-                    <div class="col-2"></div>
-                    <div class="col-6">
+                    
                         {% block content %}
                         <form action="/iris" method="POST">
                             
