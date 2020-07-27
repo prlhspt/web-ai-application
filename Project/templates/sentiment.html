@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block subtitle %}<h3><strong>감성분석</strong> - <small>네이버 영화평 긍정/부정 평가</small></h3>{% endblock %}
+			{% block content %}
+			
+			<form action="/sentiment" method="POST">
+				<table class="table table-borderless">
+					<tr>
+						<td>영화 감상평</td>
+						<td><textarea id="slen" class="form-control" rows="5" name="review"></textarea> 
+	
+					</tr>
+					
+					<tr>
+						<td colspan="2" style="text-align: center;">
+							<button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+							<button type="reset" class="btn btn-secondary">취소</button>
+						</td>
+					</tr>
+				</table>
+			</form>	
+			<div class="text-center" style="margin-top: 50px">
+				<strong>다양한 인공지능어플리케이션을 경험해 보세요.</strong>
+			</div>
+		
+{% endblock %}

@@ -54,10 +54,15 @@
                             <a class="nav-link {% if menu.stnt %}active{% endif %}"
                            href="{% if menu.stnt %}#{% else %}/sentiment{% endif %}">감성분석</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {% if menu.clsf %}active{% endif %}"
-                           href="{% if menu.clsf %}#{% else %}/regression{% endif %}">분류</a>
+                        <li class="nav-item dropdown {% if menu.clsf %}active{% endif %}">
+                            <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">분류</a>
+                            <div class="dropdown-menu">
+                            <a class="dropdown-item" href="/classification_iris">아이리스 분류</a>
+                            <a class="dropdown-item" href="#">이미지 분류</a>
+                            </div>
                         </li>
+
+
                         <li class="nav-item">
                             <a class="nav-link {% if menu.clst %}active{% endif %}"
                            href="{% if menu.clst %}#{% else %}/regression{% endif %}">군집화</a>
@@ -78,8 +83,9 @@
                 <div class="row">
                     <div class="col-2"></div>
                     <div class="col-6">
+                        {% block content %}
                         <form action="/iris" method="POST">
-                            {% block content %}
+                            
                                 <table class="table table-borderless">
                                     <tr>
                                         <td>Sepal Length</td>
@@ -113,8 +119,9 @@
                                         </td>
                                     </tr>
                                 </table>	
-                            {% endblock %}
                         </form>
+                            {% endblock %}
+                        
                     </div>
                     <div class="col-4"></div>
                 </div>                

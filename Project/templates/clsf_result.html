@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block subtitle %}<h3><strong>다중 선형회귀</strong>결과</h3>{% endblock %}
+                <hr>
+                <div class="row">
+                    <div class="col-2"></div>
+                    <div class="col-6">
+                        {% block content %}
+                            <table class="table table-borderless">
+                                <tr>
+                                    <td>Sepal Length</td>
+                                    <td>{{iris.slen}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Petal Length</td>
+                                    <td>{{iris.plen}}</td>
+                                </tr>
+                                <tr>
+                                    <td>Petal Width</td>
+                                    <td>{{iris.pwid}}</td>
+                                </tr>	
+                                <tr>
+                                    <td>>Sepal Width</td>
+                                    <td>{{iris.swid}}</td>
+                                </tr>					
+                                <tr class="alert alert-warning">
+                                    <td>Logistic Regression</td>
+                                    <td>{{iris.species_lr}}</td>
+                                </tr>
+                                <tr class="alert alert-info">
+                                    <td>Support Vector Machine</td>
+                                    <td>{{iris.species_svm}}</td>
+                                </tr>
+                                <tr class="alert alert-warning">
+                                    <td>Decision Tree</td>
+                                    <td>{{iris.species_dt}}</td>
+                                </tr>
+                                <tr class="alert alert-info">
+                                    <td>Deep Learning</td>
+                                    <td>{{iris.species_deep}}</td>
+                                </tr>                                
+                                <tr>
+                                    <td colspan="2" style="text-align: center;">
+                                        <button class = "btn btn-primary" onclick="href='/classification_iris'">재실행</button>
+                                    </td>
+                                </tr>                              
+                            </table>		
+                       {% endblock %}
+                   
