@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block subtitle %}
+    <strong>{{name}}</strong> - <small>{{nickname}}</small>
+{% endblock %}
+{% block content %}
+    {% include 'inc/'+name+'.html' %}               
+{% endblock %}

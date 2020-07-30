@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block subtitle %}
+    <strong>분류</strong> - <small>당뇨병 분류</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-6">
+            <form action="/classification_diabetes" method="POST">
+                <table class="table table-borderless">
+                    <tr>
+                        <td>Glucose</td>
+                        <td><input type="text" id="glucose" class="form-control" 
+                            placeholder="Glucose" name="glucose"></td>
+                    </tr>
+                    <tr>
+                        <td>Blood Pressure</td>
+                        <td><input type="text" id="bp" class="form-control" 
+                            placeholder="BloodPressure" name="bp"></td>
+                    </tr>
+                    <tr>
+                        <td>BMI</td>
+                        <td><input type="text" id="bmi" class="form-control" 
+                            placeholder="BMI" name="bmi"></td>
+                    </tr>
+                    <tr>
+                        <td>Age</td>
+                        <td><input type="text" id="age" class="form-control" 
+                            placeholder="Age" name="age"></td>
+                    </tr>					
+                    <tr>
+                        <td colspan="2" style="text-align: center;">
+                            <button type="submit" class="btn btn-primary">실행</button>&nbsp;&nbsp;&nbsp;
+                            <button type="reset" class="btn btn-secondary">취소</button>
+                        </td>
+                    </tr>
+                </table>		
+            </form>
+        </div>
+        <div class="col-4"></div>
+    </div>                
+{% endblock %}

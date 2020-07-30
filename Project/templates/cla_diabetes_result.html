@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block subtitle %}
+    <strong>당뇨병</strong> - <small>결과</small>
+{% endblock %}
+{% block content %}
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-6">
+            <table class="table">
+                <tr>
+                    <td>Glucose</td>
+                    <td>{{ diabetes.glucose }}</td>
+                </tr>
+                <tr>
+                    <td>Blood Pressure</td>
+                    <td>{{ diabetes.bp }}</td>
+                </tr>
+                <tr>
+                    <td>BMI</td>
+                    <td>{{ diabetes.bmi }}</td>
+                </tr>
+                <tr>
+                    <td>Age</td>
+                    <td>{{ diabetes.age }}</td>
+                </tr>
+                <tr class="alert alert-warning">
+                    <td><strong>Logistic Regression</strong></td>
+                    <td><strong>{{ diabetes.outcome_lr }}</strong></td>
+                </tr>
+                <tr class="alert alert-info">
+                    <td><strong>Support Vector Machine</strong></td>
+                    <td><strong>{{ diabetes.outcome_svm }}</strong></td>
+                </tr>
+                <tr class="alert alert-warning">
+                    <td><strong>Decision Tree</strong></td>
+                    <td><strong>{{ diabetes.outcome_dt }}</strong></td>
+                </tr>
+                <tr class="alert alert-info">
+                    <td><strong>Deep Learning</strong></td>
+                    <td><strong>{{ diabetes.outcome_deep }}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="2" style="text-align: center;">
+                        <button class="btn btn-primary"
+                                onclick="location.href='/classification_diabetes'">재실행</button>
+                    </td>
+                </tr>
+            </table>		
+        </div>
+        <div class="col-4"></div>
+    </div>                
+{% endblock %}

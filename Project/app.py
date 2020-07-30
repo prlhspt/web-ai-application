@@ -8,11 +8,26 @@ import re
 from PIL import Image
 from konlpy.tag import Okt
 from tensorflow import keras
-from keras.models import load_model
-from keras.applications.vgg16 import VGG16, decode_predictions
+from tensorflow.keras.models import load_model
+from tensorflow.keras.applications.vgg16 import VGG16, decode_predictions
+from clu_util import cluster_util
+import numpy as np
+from glob import glob
+import cv2, os, random
+import matplotlib.pyplot as plt
+import cv2
+import tensorflow as tf
+from tensorflow.keras.preprocessing import image
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Conv2D, MaxPooling2D
+from tensorflow.keras.layers import Dense, Flatten, Dropout
+
 
 app = Flask(__name__)
 app.debug = True
+
+model_dogvscat = load_model(os.path.join(app.root_path, 'model/dogs_vs_cats-cnn.hdf5'))
+model_face = load_model(os.path.join(app.root_path, 'model/mul_face2.hdf5'))
 
 vgg = VGG16()
 okt = Okt()
@@ -51,7 +66,18 @@ def load_iris():
     model_iris_lr = joblib.load(os.path.join(app.root_path, 'model/iris_lr.pkl'))
     model_iris_svm = joblib.load(os.path.join(app.root_path, 'model/iris_svm.pkl'))
     model_iris_dt = joblib.load(os.path.join(app.root_path, 'model/iris_dt.pkl'))
-    model_iris_deep = load_model(os.path.join(app.root_path, 'model/iris_deep.hdf5'))
+    model_iris_deep = load_model(os.path.join(app.root_path, 'model/iris.hdf5'))
+
+model_diabetes_lr = None
+model_diabetes_svm = None
+model_diabetes_dt = None
+model_diabetes_deep = None
+def load_diabetes():
+    global model_diabetes_lr, model_diabetes_svm, model_diabetes_dt, model_diabetes_deep
+    model_diabetes_lr = joblib.load(os.path.join(app.root_path, 'model/diabetes_lr.pkl'))
+    model_diabetes_svm = joblib.load(os.path.join(app.root_path, 'model/diabetes_svm.pkl'))
+    model_diabetes_dt = joblib.load(os.path.join(app.root_path, 'model/diabetes_dt.pkl'))
+    model_diabetes_deep = load_model(os.path.join(app.root_path, 'model/diabetes_deep.hdf5'))
 
 @app.route('/')
 def index():
@@ -95,6 +121,8 @@ def sentiment():
         movie = {'review':review, 'result_lr':result_lr, 'result_nb':result_nb}
         return render_template('senti_result.html', menu=menu, movie=movie)
 
+
+
 @app.route('/classification', methods=['GET', 'POST'])
 def classification():
     menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':True, 'clst':False, 'user':False}
@@ -105,6 +133,7 @@ def classification():
         filename = os.path.join(app.root_path, 'static/images/uploads/') + \
                     secure_filename(f.filename)
         f.save(filename)
+
         img = np.array(Image.open(filename).resize((224, 224)))
         yhat = vgg.predict(img.reshape(-1, 224, 224, 3))
         label_key = np.argmax(yhat)
@@ -113,6 +142,7 @@ def classification():
         return render_template('cla_result.html', menu=menu,
                                 filename = secure_filename(f.filename),
                                 name=label[1], pct='%.2f' % (label[2]*100))
+
 
 @app.route('/classification_iris', methods=['GET', 'POST'])
 def classification_iris():
@@ -135,17 +165,121 @@ def classification_iris():
                 'species_dt':species_dt, 'species_deep':species_deep}
         return render_template('cla_iris_result.html', menu=menu, iris=iris)
 
-@app.route('/clustering')
+@app.route('/clustering', methods=['GET', 'POST'])
 def clustering():
-    pass
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':True, 'user':False}
+    if request.method == 'GET':
+        return render_template('clustering.html', menu=menu)
+    else:
+        f = request.files['csv']
+        filename = os.path.join(app.root_path, 'static/images/uploads/') + \
+                    secure_filename(f.filename)
+        f.save(filename)
+        ncls = int(request.form['K'])
+        cluster_util(app, ncls, secure_filename(f.filename))
+        img_file = os.path.join(app.root_path, 'static/images/kmc.png')
+        mtime = int(os.stat(img_file).st_mtime)
+        return render_template('clu_result.html', menu=menu, K=ncls, mtime=mtime)
 
-@app.route('/lhs')
-def profile():
+@app.route('/member/<name>')
+def member(name):
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':False, 'clst':False, 'user':True}
+    return render_template('user.html', menu=menu, name=name)
+
+@app.route('/classification_cnn', methods=['GET', 'POST'])
+def classification_cnn():
     menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':True, 'clst':False, 'user':False}
-    return render_template('profile.html', menu=menu)
+    if request.method == 'GET':
+        return render_template('classification_cnn.html', menu=menu)
+        
+    else:
+        f = request.files['cd']
+        filename = os.path.join(app.root_path, 'static/images/cnn/') + \
+                    secure_filename(f.filename)
+        f.save(filename)
+        dogcats= []
+        img = np.array(Image.open(filename))
+        dogcat = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        dogcat = cv2.resize(dogcat, (96, 96))
+        dogcat = image.img_to_array(dogcat)
+        dogcats.append(dogcat)
+
+        classes = ["cat","dog"]
+        dogcats = np.asarray(dogcats).astype('float32')
+        pct = np.asarray(dogcats).astype('float32') / 255
+        print(dogcats.shape)
+        kind = classes[model_dogvscat.predict_classes(dogcats)[0][0]]
+        pct = model_dogvscat.predict(pct)
+        pct = round(pct[0][0]*100, 3)
+        return render_template('cla_cnn_result.html', menu=menu,
+                                filename = secure_filename(f.filename),
+                                pct=pct, kind=kind)
+
+
+
+@app.route('/face', methods=['GET', 'POST'])
+def face():
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':True, 'clst':False, 'user':False}
+    if request.method == 'GET':
+        return render_template('face.html', menu=menu)
+        
+    else:
+        f = request.files['face']
+        filename = os.path.join(app.root_path, 'static/images/uploads/') + \
+                    secure_filename(f.filename)
+        f.save(filename)
+
+        faces = []
+        ROW, COL = 96, 96
+        path = 'static/images/uploads'
+        face_img = os.path.join(path, secure_filename(f.filename))
+       # for face_img in glob(face_path):
+        face = cv2.imread(face_img)
+        face = cv2.cvtColor(face, cv2.COLOR_BGR2GRAY)
+        face = cv2.resize(face, (ROW, COL))
+        face = image.img_to_array(face)
+        faces.append(face)
+
+            
+
+        kind = np.asarray(faces).astype('float32')
+        classes = ['개상', '고양이상']
+
+        kind = model_face.predict_classes(kind)
+
+        pct = np.asarray(faces).astype('float32') / 255
+        pct = model_face.predict(pct)
+        kind = classes[kind[0][0]]
+        pct = round(pct[0][0]*100, 3)
+
+        return render_template('face_result.html', menu=menu,
+                                filename = secure_filename(f.filename),
+                                pct=pct, kind=kind)
+
+@app.route('/classification_diabetes', methods=['GET', 'POST'])
+def classification_diabetes():
+    menu = {'home':False, 'rgrs':False, 'stmt':False, 'clsf':True, 'clst':False, 'user':False}
+    if request.method == 'GET':
+        return render_template('classification_diabetes.html', menu=menu)
+    else:
+        outcome = ['Negative','Positive']
+        glucose = float(request.form['glucose'])      # Sepal Length
+        bp = float(request.form['bp'])      # Sepal Width
+        bmi = float(request.form['bmi'])      # Petal Length
+        age = float(request.form['age'])      # Petal Width
+        test_data = np.array([glucose, bp, bmi, age]).reshape(1,4)
+        outcome_lr = outcome[model_diabetes_lr.predict(test_data)[0]]
+        outcome_svm = outcome[model_diabetes_svm.predict(test_data)[0]]
+        outcome_dt = outcome[model_diabetes_dt.predict(test_data)[0]]
+        outcome_deep = outcome[model_diabetes_deep.predict_classes(test_data)[0][0]]
+        diabetes = {'glucose': glucose, 'bp': bp, 'bmi': bmi, 'age': age, 
+                'outcome_lr':outcome_lr, 'outcome_svm':outcome_svm,
+                'outcome_dt':outcome_dt, 'outcome_deep':outcome_deep}
+        return render_template('cla_diabetes_result.html', menu=menu, diabetes = diabetes)
 
 if __name__ == '__main__':
+    load_diabetes()
     load_movie_lr()
     load_movie_nb()
     load_iris()
-    app.run()
+    app.run(host='0.0.0.0')     # 외부 접속 허용시 host='0.0.0.0' 추가

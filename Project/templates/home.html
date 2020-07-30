@@ -1,43 +1,39 @@
 {% extends 'base.html' %}
-{% block subtitle %} 인공지능 어플리케이션 {% endblock %}
+{% block subtitle %}인공지능 어플리케이션{% endblock %}
 {% block content %}
-
-<div id="demo" class="carousel slide" data-ride="carousel">
-
-	<!-- Indicators -->
-	<ul class="carousel-indicators">
-		<li data-target="#demo" data-slide-to="0" class="active"></li>
-		<li data-target="#demo" data-slide-to="1"></li>
-		<li data-target="#demo" data-slide-to="2"></li>
-	</ul>
-
 	<div id="demo" class="carousel slide" data-ride="carousel">
+		<!-- Indicators -->
 		<ul class="carousel-indicators">
 			<li data-target="#demo" data-slide-to="0" class="active"></li>
 			<li data-target="#demo" data-slide-to="1"></li>
 			<li data-target="#demo" data-slide-to="2"></li>
 		</ul>
+
+		<!-- The slideshow -->
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="{{ url_for('static', filename='images/ai.jpg') }}" alt="ai" width="1100" height="500" class="d-block w-100">
+				<img src="{{ url_for('static', filename='gallery/09_분류(이미지)결과.png') }}" 
+					 alt="분류(이미지) 결과" class="d-block w-100">
 			</div>
 			<div class="carousel-item">
-				<img src="{{ url_for('static', filename='images/ml.jpg') }}" alt="ml" width="1100" height="500"class= "d-block w-100">
+				<img src="{{ url_for('static', filename='gallery/11_군집화결과.png') }}" 
+					 alt="군집화 결과" class="d-block w-100">
 			</div>
 			<div class="carousel-item">
-				<img src="{{ url_for('static', filename='images/dl.jpg') }}" alt="dl" width="1100" height="500" class="d-block w-100">
+				<img src="{{ url_for('static', filename='gallery/05_감성분석결과.png') }}" 
+					 alt="감성분석 결과" class="d-block w-100">
 			</div>
 		</div>
-			<a class="carousel-control-prev" href="#demo" data-slide="prev">
-				<span class="carousel-control-prev-icon"></span>
-			</a>
-			<a class="carousel-control-next" href="#demo" data-slide="next">
-				<span class="carousel-control-next-icon"></span>
-			</a>
-		</div>
-	</div>
 
-	<div class="text-center" style="margin-top: 50px">
-		<strong>다양한 인공지능어플리케이션을 경험해 보세요.</strong>
+		<!-- Left and right controls -->
+		<a class="carousel-control-prev" href="#demo" data-slide="prev">
+			<span class="carousel-control-prev-icon"></span>
+		</a>
+		<a class="carousel-control-next" href="#demo" data-slide="next">
+			<span class="carousel-control-next-icon"></span>
+		</a>
 	</div>
-	{% endblock %}
+	<div class="text-center" style="margin-top: 20px">
+        <strong>다양한 인공지능 어플리케이션을 경험해 보세요.</strong>
+    </div>
+{% endblock %}
